@@ -151,9 +151,9 @@ exports.modifySauce = (req, res, next) => {
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => {
-      const filename = sauce.imageUrl.split("/images/")[1]; // Finding the image's name
+      const filename = sauce.imageUrl.split("/images/")[1]; // trouver le nom de l'image
       fs.unlink(`images/${filename}`, () => {
-        Sauce.deleteOne({ _id: req.params.id }) // Deleting the image in DB after deleting it from disk
+        Sauce.deleteOne({ _id: req.params.id }) // on efface l'image de db après l'avoir effacé du disque
           .then(() => res.status(200).json({ message: "Objet supprimé !" }))
           .catch((error) => res.status(400).json({ error }));
       });
